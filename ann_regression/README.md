@@ -1,169 +1,191 @@
-# 🔬 Deep Learning Models — PyTorch
+# ⚡ Power Plant Energy Output Prediction using ANN
 
-> A growing collection of deep learning projects built from scratch using PyTorch.  
-> Each project includes a Jupyter Notebook for exploration and a `.py` file for clean implementation.
+### Deep Learning | PyTorch | Regression
 
------
-
-## Project
-
-|Project                                                                   |Type      |Dataset |R² Score|Status    |
-|--------------------------------------------------------------------------|----------|--------|--------|----------|
-|[ANN Regression — Power Plant](#ann-regression--power-plant-energy-output)|Regression|UCI CCPP|0.9341  |✅ Complete|
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
+![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)
+![R2 Score](https://img.shields.io/badge/R²%20Score-93.42%25-brightgreen?style=for-the-badge)
+![MSE](https://img.shields.io/badge/Test%20MSE-18.82-orange?style=for-the-badge)
 
 -----
 
-##  ANN Regression — Power Plant Energy Output
+## Project Overview
 
-###  Problem Statement
+This project implements an **Artificial Neural Network (ANN)** from scratch using **PyTorch** to predict the **hourly electrical energy output** of a Combined Cycle Power Plant based on environmental sensor readings.
 
-Predict the **net hourly electrical energy output (PE)** of a Combined Cycle Power Plant using ambient environmental sensor readings.
-
-This is a classic regression problem that demonstrates how a simple feedforward neural network can outperform traditional ML models on structured/tabular data.
+The model achieves an **R² score of 0.934** on the test set — meaning the model explains **93.4% of the variance** in energy output, demonstrating strong predictive performance on a real-world regression problem.
 
 -----
 
-### 📊 Dataset
+## Problem Statement
 
-**Source:** [UCI Machine Learning Repository — CCPP Dataset](https://archive.ics.uci.edu/ml/datasets/Combined+Cycle+Power+Plant)
+Predict the **net hourly electrical energy output (PE)** of a power plant given:
 
-|Feature|Description                   |Unit    |
-|-------|------------------------------|--------|
-|AT     |Ambient Temperature           |°C      |
-|V      |Exhaust Vacuum                |cm Hg   |
-|AP     |Ambient Pressure              |millibar|
-|RH     |Relative Humidity             |%       |
-|**PE** |**Net Energy Output (Target)**|**MW**  |
-
-- **Total Samples:** 9,568
-- **Train / Test Split:** 80% / 20%
-- **Null Values:** None
+- Ambient Temperature
+- Exhaust Vacuum
+- Ambient Pressure
+- Relative Humidity
 
 -----
 
-###  Model Architecture
+## Dataset
+
+- **File**: powerplant_data.csv
+- **Samples**: 9,568 rows
+- **Features**: 4 input features
+- **Target**: PE (Produced Energy in MW)
+- **Missing Values**: None ✅
+
+### Features Description:
+
+|Feature|Description                        |
+|-------|-----------------------------------|
+|AT     |Ambient Temperature (°C)           |
+|V      |Exhaust Vacuum (cm Hg)             |
+|AP     |Ambient Pressure (millibar)        |
+|RH     |Relative Humidity (%)              |
+|PE     |Net Energy Output (MW) — **Target**|
+
+-----
+
+## Model Architecture
 
 ```
 Input Layer  →  4 features (AT, V, AP, RH)
      ↓
-Hidden Layer 1  →  Linear(4 → 6)  +  ReLU
+Hidden Layer 1  →  6 neurons  +  ReLU
      ↓
-Hidden Layer 2  →  Linear(6 → 6)  +  ReLU
+Hidden Layer 2  →  6 neurons  +  ReLU
      ↓
-Output Layer    →  Linear(6 → 1)  →  PE (predicted)
+Output Layer  →  1 neuron (Linear — continuous output)
 ```
 
-**Why this architecture?**  
-For a 4-feature tabular regression task, a lightweight 2-hidden-layer network is sufficient. Deeper networks would overfit on this dataset size. ReLU activations introduce non-linearity to capture complex feature interactions.
+### Why this architecture?
+
+- **ReLU** in hidden layers → avoids vanishing gradient problem
+- **Linear activation on output** → regression needs continuous unbounded output
+- **MSELoss** → standard loss for regression problems
+- **Small architecture** → dataset has only 4 features, avoids overfitting
 
 -----
 
-### ⚙️Training Configuration
+## ⚙️ Training Configuration
 
-|Parameter         |Value                                    |
-|------------------|-----------------------------------------|
-|Loss Function     |MSELoss                                  |
-|Optimizer         |Adam                                     |
-|Learning Rate     |0.001 (default)                          |
-|Batch Size        |32                                       |
-|Epochs            |100                                      |
-|Data Preprocessing|StandardScaler (zero mean, unit variance)|
-|Best Model Saving |✅ Checkpoint on lowest validation loss   |
-
------
-
-### 📈 Results
-
-|Metric      |Value     |
-|------------|----------|
-|Training MSE|~20.49    |
-|Testing MSE |~19.06    |
-|**R² Score**|**0.9341**|
-
-
-> An R² of **0.934** means the model explains **93.4% of the variance** in power plant energy output — strong performance for a 2-hidden-layer network with no hyperparameter tuning.
-
-**Loss Curve:**
-
-The training and validation loss curves converge cleanly with no signs of overfitting. Validation loss tracking was done correctly on the **held-out test set** using `test_loader`.
+|Parameter        |Value         |
+|-----------------|--------------|
+|Loss Function    |MSELoss       |
+|Optimizer        |Adam          |
+|Epochs           |100           |
+|Batch Size       |32            |
+|Train/Test Split |80% / 20%     |
+|Scaling          |StandardScaler|
+|Best Model Saving|✅ torch.save()|
 
 -----
 
-### Tech Stack
+## 📈 Results
 
-- Python 3.x
-- PyTorch
-- Pandas / NumPy
-- Scikit-learn (train/test split, StandardScaler, R² score)
-- Matplotlib
+|Metric         |Value     |
+|---------------|----------|
+|Training MSE   |20.48     |
+|**Testing MSE**|**18.82** |
+|**R² Score**   |**0.9342**|
+
+### Loss Curve Observations:
+
+- Loss dropped sharply from **~205,931** (epoch 1) to near **~20** (epoch 100)
+- Training and Validation loss curves stayed **close together** → no overfitting ✅
+- Best model saved automatically during training
+- Test MSE **lower** than Train MSE → excellent generalization
 
 -----
 
-### How to Run
+## 🛠️ Tech Stack
+
+```
+Python          →  Core language
+PyTorch         →  Neural network framework
+Scikit-learn    →  Preprocessing + R² evaluation
+Pandas          →  Data loading and manipulation
+NumPy           →  Numerical operations
+Matplotlib      →  Loss curve visualization
+```
+
+-----
+
+## 📁 Project Structure
+
+```
+ann_regression/
+│
+├── ann_regression.ipynb    # Main notebook
+├── powerplant_data.csv     # Dataset
+├── best_model.pt           # Saved best model weights
+└── README.md               # Project documentation
+```
+
+-----
+
+## 🚀 How to Run
+
+**1. Clone the repository**
 
 ```bash
-# Clone the repo
 git clone https://github.com/mehranmushtaq/deep-learning.git
 cd deep-learning/ann_regression
+```
 
-# Install dependencies
-pip install -r requirements.txt
+**2. Install dependencies**
 
-# Run the notebook
-jupyter lab ann_regression.ipynb
+```bash
+pip install torch pandas numpy scikit-learn matplotlib
+```
 
-# OR run the Python script
-python ann_regression.py
+**3. Run the notebook**
+
+```bash
+jupyter notebook ann_regression.ipynb
 ```
 
 -----
 
-###  Requirements
+## 🔑 Key Learnings
 
-```
-torch
-pandas
-numpy
-scikit-learn
-matplotlib
-jupyterlab
-```
+- **Regression** requires Linear output activation + MSELoss
+- **StandardScaler** normalizes features for faster convergence
+- `torch.save(model.state_dict(), "best_model.pt")` saves best model during training
+- `torch.no_grad()` during validation prevents unnecessary gradient computation
+- **R² score** is the best metric for regression evaluation (not just MSE)
+- Training and validation loss **tracking** helps detect overfitting early
 
 -----
 
-### 🧩 Key Learnings
+## 📉 Predicted vs Actual Values (Sample)
 
-- How to build a custom ANN using `nn.Module` in PyTorch
-- Importance of feature scaling before training neural networks
-- Using `DataLoader` and `TensorDataset` for efficient batch training
-- Tracking and comparing training vs. validation loss per epoch
-- Saving and loading the best model checkpoint with `torch.save` / `torch.load`
-- Evaluating regression models with MSE and R² score
+|#|Predicted (MW)|Actual (MW)|
+|-|--------------|-----------|
+|0|434.96        |433.27     |
+|1|436.88        |438.16     |
 
------
-
-###  Future Improvements
-
--  Hyperparameter tuning (learning rate, hidden units, layers)
--  Add dropout regularization
--  Experiment with deeper architectures
--  Compare with scikit-learn baselines (Random Forest, XGBoost)
--  Deploy as a simple web API using FastAPI
+Very close predictions — model learned the pattern well ✅
 
 -----
 
-## 👤 Author
+## 👨‍💻 Author
 
-**Mehran Mushtaq**  
-📧 mehraan551@gmail.com.com  
-🔗 [GitHub](https://github.com/mehranmushtaq)
+**Mehran Mushtaq**
 
------
+- 1st Year CSE Student
+- ML & Deep Learning
+- 📍 Kashmir, India
 
-## 📄 License
-
-This project is open source under the [MIT License](LICENSE).
+> *“Built from scratch. No shortcuts. Just learning.”*
 
 -----
 
-*⭐ If you found this useful, consider starring the repo!*
+## 🔗 Related Projects
+
+- [ANN Classification — Date Fruit Variety Classification](../ann_classification/)
+
+-----
+
