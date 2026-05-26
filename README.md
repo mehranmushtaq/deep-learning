@@ -147,17 +147,18 @@ jupyter notebook ann_regression.ipynb
 deep-learning/
 │
 ├── ann_regression/
-│   ├── ann_regression.ipynb      # Power Plant Energy Prediction
-│   ├── powerplant_data.csv       # Dataset
-│   ├── best_model.pt             # Saved best model
-│   └── README.md                 # Project details
+│   ├── ann_regression.ipynb
+│   ├── ann_regression.py     
+│   ├── powerplant_data.csv      
+│   ├── best_model.pt          
+│   └── README.md                
 │
 ├── ann_classification/
-│   ├── ann_classification.ipynb  # Date Fruit Classification
-│   ├── DateFruit_Dataset.csv     # Dataset
-│   └── README.md                 # Project details
+│   ├── ann_classification.ipynb  
+│   ├── DateFruit_Dataset.csv     
+│   └── README.md             
 │
-└── README.md                     # You are here
+└── README.md                    
 ```
 
 -----
