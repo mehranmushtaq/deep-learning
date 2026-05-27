@@ -1,4 +1,4 @@
-# ⚡ Power Plant Energy Output Prediction using ANN
+# Power Plant Energy Output Prediction using ANN
 
 ### Deep Learning | PyTorch | Regression
 
