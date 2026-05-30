@@ -171,11 +171,11 @@ Phase 1 — ANN ✅
 └── ANN Classification    ✅ Done (Acc=94.44%)
 
 Phase 2 — CNN 🔄
-├── Image Classification (MNIST)
+├── Image Classification
 └── Custom CNN project
 
 Phase 3 — NLP 📅
-├── Text Summarization (HuggingFace)
+├── Text Summarization
 └── Flask deployment
 
 Phase 4 — Advanced 📅
