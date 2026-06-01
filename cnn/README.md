@@ -217,5 +217,7 @@ nn.Dropout(0.5)      # Prevents overfitting
 - [ANN Classification — Date Fruit Variety Classification](../ann_classification/)
 
 -----
+[![Open in nbviewer](https://img.shields.io/badge/Open%20in-nbviewer-orange)](https://nbviewer.org/github/mehranmushtaq/deep-learning/blob/main/cnn/cnn_for_cifar10.ipynb)
+
 
 ⭐ **Star this repo if you found it helpful!**
