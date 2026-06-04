@@ -41,7 +41,7 @@ Built as a **1st year CSE student**, self-learned from ground up.
 
 - Full PyTorch pipeline from scratch
 - StandardScaler preprocessing
-- Train/Validation loss tracking
+- Train/Validation loss tracking across 100 epochs
 - Best model saving with `torch.save()`
 - Predicted vs Actual values comparison
 
@@ -71,6 +71,42 @@ Built as a **1st year CSE student**, self-learned from ground up.
 
 -----
 
+### 🖼️ 3. CNN — CIFAR-10 Image Classification
+
+📁 [`cnn/`](./cnn/)
+
+|Detail           |Value                 |
+|-----------------|----------------------|
+|Task             |Image Classification  |
+|Dataset          |CIFAR-10 (torchvision)|
+|Training Images  |50,000                |
+|Test Images      |10,000                |
+|Image Size       |32×32×3 (RGB)         |
+|Classes          |10                    |
+|Loss Function    |CrossEntropyLoss      |
+|Optimizer        |Adam                  |
+|**Test Accuracy**|**75.32%** ✅          |
+
+**Architecture:**
+
+```
+Input (3×32×32)
+→ Conv2d(3→32) + ReLU + MaxPool(2×2)
+→ Conv2d(32→64) + ReLU + MaxPool(2×2)
+→ Conv2d(64→128) + ReLU + MaxPool(2×2)
+→ Flatten → Linear(2048→256) + ReLU
+→ Linear(256→10)
+```
+
+**Highlights:**
+
+- 3-block CNN architecture from scratch
+- Loss dropped from 1.37 → 0.15 over 10 epochs
+- `torch.max(outputs, 1)` for class prediction
+- Trained on Apple M4 MPS GPU
+
+-----
+
 ## 🧠 Deep Learning Concepts Covered
 
 ```
@@ -85,9 +121,12 @@ Built as a **1st year CSE student**, self-learned from ground up.
 ✅ Weight Updation & Chain Rule in NN
 ✅ TensorDataset & DataLoader (PyTorch)
 ✅ Model saving & loading (torch.save / torch.load)
+✅ Convolutional Layers (Conv2d, MaxPool2d, Padding, Stride)
+✅ Feature Maps & Kernel operations
+✅ Flatten layer → Fully Connected
 
 🔄 In Progress:
-⬜ CNN (Convolutional Neural Networks)
+⬜ BatchNorm + Dropout (CNN improvement)
 ⬜ NLP & Text Summarization
 ⬜ RNN / LSTM
 ⬜ Transformers
@@ -101,19 +140,21 @@ Built as a **1st year CSE student**, self-learned from ground up.
 framework   = "PyTorch"
 language    = "Python 3.8+"
 libraries   = ["torch", "torch.nn", "torch.optim",
-               "torch.utils.data", "sklearn", 
-               "pandas", "numpy", "matplotlib"]
+               "torch.utils.data", "torchvision",
+               "sklearn", "pandas", "numpy", "matplotlib"]
 environment = "Jupyter Notebook"
+hardware    = "Apple M4 MPS GPU"
 ```
 
 -----
 
 ## 📊 Results Summary
 
-|Project                  |Type      |Metric  |Score     |
-|-------------------------|----------|--------|----------|
-|Power Plant Energy       |Regression|R² Score|**0.9342**|
-|Date Fruit Classification|Multiclass|Accuracy|**94.44%**|
+|Project                  |Type                |Metric  |Score     |
+|-------------------------|--------------------|--------|----------|
+|Power Plant Energy       |Regression          |R² Score|**0.9342**|
+|Date Fruit Classification|Multiclass          |Accuracy|**94.44%**|
+|CIFAR-10 CNN             |Image Classification|Accuracy|**75.32%**|
 
 -----
 
@@ -129,7 +170,7 @@ cd deep-learning
 **Install dependencies:**
 
 ```bash
-pip install torch pandas numpy scikit-learn matplotlib jupyter
+pip install torch torchvision pandas numpy scikit-learn matplotlib jupyter
 ```
 
 **Navigate to any project:**
@@ -147,42 +188,22 @@ jupyter notebook ann_regression.ipynb
 deep-learning/
 │
 ├── ann_regression/
-│   ├── ann_regression.ipynb
-│   ├── ann_regression.py     
-│   ├── powerplant_data.csv      
-│   ├── best_model.pt          
-│   └── README.md                
+│   ├── ann_regression.ipynb      # Power Plant Energy Prediction
+│   ├── powerplant_data.csv       # Dataset
+│   ├── best_model.pt             # Saved best model
+│   └── README.md
 │
 ├── ann_classification/
-│   ├── ann_classification.ipynb  
-│   ├── DateFruit_Dataset.csv     
-│   └── README.md             
+│   ├── ann_classification.ipynb  # Date Fruit Classification
+│   ├── DateFruit_Dataset.csv     # Dataset
+│   └── README.md
 │
-└── README.md                    
+├── cnn/
+│   ├── cnn_for_cifar10.ipynb     # CIFAR-10 Image Classification
+│   └── README.md
+│
+└── README.md                     # You are here
 ```
-
------
-
-## 🗺️ Roadmap
-
-```
-Phase 1 — ANN ✅
-├── ANN Regression        ✅ Done (R²=0.93)
-└── ANN Classification    ✅ Done (Acc=94.44%)
-
-Phase 2 — CNN 🔄
-├── Image Classification
-└── Custom CNN project
-
-Phase 3 — NLP 📅
-├── Text Summarization
-└── Flask deployment
-
-Phase 4 — Advanced 📅
-├── RNN / LSTM
-└── Transformers
-```
-
 -----
 
 ## 👨‍💻 Author
@@ -203,10 +224,7 @@ Phase 4 — Advanced 📅
 - [Exploratory Data Analysis](https://github.com/mehranmushtaq/exploratory-data-analysis)
 
 -----
-
-  "Kashmir — built everything from scratch, one commit at a time." 
-
-
+"From, Kashmir — built everything from scratch, one commit at a time." 
 -----
 
 ⭐ **Star this repo if you find it helpful!**
