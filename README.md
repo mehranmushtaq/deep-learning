@@ -1,4 +1,4 @@
-# 🧠 Deep Learning with PyTorch
+# Deep Learning with PyTorch
 
 ### My deep learning journey — one model at a time.
 
