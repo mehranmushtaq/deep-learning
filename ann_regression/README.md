@@ -1,173 +1,205 @@
-# Power Plant Energy Output Prediction using ANN
+# ⚡ Power Plant Energy Output Prediction
 
-### Deep Learning | PyTorch | Regression
+### Complete ML & DL Comparison Study | Sklearn + PyTorch
 
-![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python)
-![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red?style=for-the-badge&logo=pytorch)
-![R2 Score](https://img.shields.io/badge/R²%20Score-93.42%25-brightgreen?style=for-the-badge)
-![MSE](https://img.shields.io/badge/Test%20MSE-18.82-orange?style=for-the-badge)
+![Python](https://img.shields.io/badge/Python-3.8+-blue?style=for-the-badge&logo=python&logoColor=white)
+![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)
+![Sklearn](https://img.shields.io/badge/Scikit--Learn-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)
+![Best R²](https://img.shields.io/badge/Best%20R²-0.9648-brightgreen?style=for-the-badge)
+![Models](https://img.shields.io/badge/Models-6-orange?style=for-the-badge)
 
------
-
-## Project Overview
-
-This project implements an **Artificial Neural Network (ANN)** from scratch using **PyTorch** to predict the **hourly electrical energy output** of a Combined Cycle Power Plant based on environmental sensor readings.
-
-The model achieves an **R² score of 0.934** on the test set — meaning the model explains **93.4% of the variance** in energy output, demonstrating strong predictive performance on a real-world regression problem.
+> *A complete machine learning study comparing 6 different models on the same dataset — from simple Linear Regression to deep ANN to advanced Stacking Ensembles.*
 
 -----
 
-## Problem Statement
+## 📌 Project Overview
 
-Predict the **net hourly electrical energy output (PE)** of a power plant given:
+This project predicts the **hourly net electrical energy output** of a Combined Cycle Power Plant using environmental sensor readings. What makes this project unique is the **comprehensive model comparison** — every major regression technique is applied, tuned, and evaluated on the same dataset.
 
-- Ambient Temperature
-- Exhaust Vacuum
-- Ambient Pressure
-- Relative Humidity
+Built as a **1st year CSE student**, self-learned from ground up.
 
 -----
 
-## Dataset
+## 🏭 Problem Statement
 
-- **File**: powerplant_data.csv
-- **Samples**: 9,568 rows
+Predict **PE (Net Energy Output in MW)** given:
+
+|Feature|Description                |
+|-------|---------------------------|
+|AT     |Ambient Temperature (°C)   |
+|V      |Exhaust Vacuum (cm Hg)     |
+|AP     |Ambient Pressure (millibar)|
+|RH     |Relative Humidity (%)      |
+
+-----
+
+## 📊 Dataset
+
+- **File**: `powerplant_data.csv`
+- **Samples**: 9,568
 - **Features**: 4 input features
-- **Target**: PE (Produced Energy in MW)
+- **Target**: PE — Net Energy Output (MW)
 - **Missing Values**: None ✅
 
-### Features Description:
+-----
 
-|Feature|Description                        |
-|-------|-----------------------------------|
-|AT     |Ambient Temperature (°C)           |
-|V      |Exhaust Vacuum (cm Hg)             |
-|AP     |Ambient Pressure (millibar)        |
-|RH     |Relative Humidity (%)              |
-|PE     |Net Energy Output (MW) — **Target**|
+## 🏆 Model Comparison Results
+
+|#|Model                 |R² Score  |Mean R² (5-Fold CV)|Notes                   |
+|-|----------------------|----------|-------------------|------------------------|
+|1|Linear Regression     |0.9303    |0.9284             |Baseline                |
+|2|ANN (PyTorch)         |0.9342    |—                  |2 hidden layers         |
+|3|SVR                   |0.9481    |0.9476             |RBF kernel, GridSearchCV|
+|4|Voting Regressor      |0.9589    |0.9580             |LR + RF + SVR           |
+|5|Random Forest         |0.9645    |0.9640             |300 trees, GridSearchCV |
+|6|**Stacking Regressor**|**0.9648**|**0.9644**         |**LR+RF+SVR → Ridge** 🏆 |
 
 -----
 
-## Model Architecture
+## 📈 Visual Comparison
 
 ```
-Input Layer  →  4 features (AT, V, AP, RH)
-     ↓
-Hidden Layer 1  →  6 neurons  +  ReLU
-     ↓
-Hidden Layer 2  →  6 neurons  +  ReLU
-     ↓
-Output Layer  →  1 neuron (Linear — continuous output)
-```
-
-### Why this architecture?
-
-- **ReLU** in hidden layers → avoids vanishing gradient problem
-- **Linear activation on output** → regression needs continuous unbounded output
-- **MSELoss** → standard loss for regression problems
-- **Small architecture** → dataset has only 4 features, avoids overfitting
-
------
-
-## ⚙️ Training Configuration
-
-|Parameter        |Value         |
-|-----------------|--------------|
-|Loss Function    |MSELoss       |
-|Optimizer        |Adam          |
-|Epochs           |100           |
-|Batch Size       |32            |
-|Train/Test Split |80% / 20%     |
-|Scaling          |StandardScaler|
-|Best Model Saving|✅ torch.save()|
-
------
-
-## 📈 Results
-
-|Metric         |Value     |
-|---------------|----------|
-|Training MSE   |20.48     |
-|**Testing MSE**|**18.82** |
-|**R² Score**   |**0.9342**|
-
-### Loss Curve Observations:
-
-- Loss dropped sharply from **~205,931** (epoch 1) to near **~20** (epoch 100)
-- Training and Validation loss curves stayed **close together** → no overfitting ✅
-- Best model saved automatically during training
-- Test MSE **lower** than Train MSE → excellent generalization
-
------
-
-## 🛠️ Tech Stack
-
-```
-Python          →  Core language
-PyTorch         →  Neural network framework
-Scikit-learn    →  Preprocessing + R² evaluation
-Pandas          →  Data loading and manipulation
-NumPy           →  Numerical operations
-Matplotlib      →  Loss curve visualization
+Linear Regression  ████████████████████░░░  R² = 0.9303
+ANN (PyTorch)      ████████████████████░░░  R² = 0.9342
+SVR                █████████████████████░░  R² = 0.9481
+Voting Ensemble    ██████████████████████░  R² = 0.9589
+Random Forest      ███████████████████████  R² = 0.9645
+Stacking Ensemble  ███████████████████████  R² = 0.9648 🏆
 ```
 
 -----
 
-## 📁 Project Structure
+## 🧠 Models & Techniques
 
-```
-ann_regression/
-│
-├── ann_regression.ipynb    # Main notebook
-├── powerplant_data.csv     # Dataset
-├── best_model.pt           # Saved best model weights
-└── README.md               # Project documentation
-```
+### 1. Linear Regression (Baseline)
 
------
-
-## 🚀 How to Run
-
-**1. Clone the repository**
-
-```bash
-git clone https://github.com/mehranmushtaq/deep-learning.git
-cd deep-learning/ann_regression
+```python
+Pipeline([
+    ('scaler', StandardScaler()),
+    ('LR', LinearRegression())
+])
+# R² = 0.9303 | MAE = 3.61 | MSE = 20.21
 ```
 
-**2. Install dependencies**
+### 2. ANN — Artificial Neural Network (PyTorch)
 
-```bash
-pip install torch pandas numpy scikit-learn matplotlib
+```
+Input (4) → Linear(4→6) → ReLU
+          → Linear(6→6) → ReLU
+          → Linear(6→1)
+# Optimizer: Adam | Loss: MSELoss | Epochs: 100
+# R² = 0.9342 | Test MSE = 18.82
 ```
 
-**3. Run the notebook**
+### 3. Support Vector Regressor
 
-```bash
-jupyter notebook ann_regression.ipynb
+```python
+Pipeline([
+    ('scaler', StandardScaler()),
+    ('svr', SVR(kernel='rbf'))
+])
+# GridSearchCV: C=[0.1,0.5,50,100], epsilon=[0.2,0.4,0.8,1]
+# Best R² = 0.9481 | Mean CV R² = 0.9476
+```
+
+### 4. Random Forest Regressor
+
+```python
+RandomForestRegressor(
+    n_estimators=300, max_depth=10,
+    min_samples_split=5, min_samples_leaf=2,
+    max_features='sqrt'
+)
+# GridSearchCV: 54 candidates × 5 folds
+# Best R² = 0.9645 | Mean CV R² = 0.9640
+```
+
+### 5. Voting Regressor (Ensemble)
+
+```python
+VotingRegressor(estimators=[
+    ('lr', pipe_lr),
+    ('rf', best_rf),
+    ('svr', best_svr)
+], weights=[1, 2, 1])
+# R² = 0.9589 | Mean CV R² = 0.9580
+```
+
+### 6. Stacking Regressor (Best Model 🏆)
+
+```python
+StackingRegressor(
+    estimators=[
+        ('lr', pipe_lr),
+        ('rf', best_rf),
+        ('svr', best_svr)
+    ],
+    final_estimator=Ridge(),
+    cv=5
+)
+# R² = 0.9648 | Mean CV R² = 0.9644
 ```
 
 -----
 
 ## 🔑 Key Learnings
 
-- **Regression** requires Linear output activation + MSELoss
-- **StandardScaler** normalizes features for faster convergence
-- `torch.save(model.state_dict(), "best_model.pt")` saves best model during training
-- `torch.no_grad()` during validation prevents unnecessary gradient computation
-- **R² score** is the best metric for regression evaluation (not just MSE)
-- Training and validation loss **tracking** helps detect overfitting early
+```
+✅ Tree models (RF) outperform ANN on small tabular datasets
+✅ Stacking > Voting — meta-learner captures model complementarity
+✅ GridSearchCV essential for SVR and RF hyperparameter tuning
+✅ Pipeline prevents data leakage during cross-validation
+✅ Cross-validation gives more reliable estimate than single test split
+✅ StandardScaler critical for LR and SVR, optional for RF
+✅ ANN needs more data to outshine classical ML on tabular data
+```
 
 -----
 
-## 📉 Predicted vs Actual Values (Sample)
+## 🛠️ Tech Stack
 
-|#|Predicted (MW)|Actual (MW)|
-|-|--------------|-----------|
-|0|434.96        |433.27     |
-|1|436.88        |438.16     |
+```python
+ml_framework  = "Scikit-Learn"
+dl_framework  = "PyTorch"
+language      = "Python 3.8+"
+libraries     = ["pandas", "numpy", "sklearn",
+                 "torch", "matplotlib"]
+environment   = "Jupyter Notebook"
+hardware      = "Apple M4 MPS GPU (ANN training)"
+```
 
-Very close predictions — model learned the pattern well ✅
+-----
+## 🚀 How to Run
+
+```bash
+# Clone
+git clone https://github.com/mehranmushtaq/deep-learning.git
+cd deep-learning/ann_regression
+
+# Install
+pip install torch pandas numpy scikit-learn matplotlib jupyter
+
+# Run ML comparison
+jupyter notebook ml_comparison.ipynb
+
+# Run ANN
+jupyter notebook ann_regression.ipynb
+```
+
+-----
+
+## 💡 Why Stacking Beats Everything
+
+```
+Linear Regression  → captures linear patterns
+Random Forest      → captures non-linear patterns
+SVR                → captures margin-based patterns
+
+Stacking combines all three:
+→ Each model learns different aspects
+→ Ridge meta-learner finds optimal combination
+→ Result: better than any single model
+```
 
 -----
 
@@ -175,17 +207,23 @@ Very close predictions — model learned the pattern well ✅
 
 **Mehran Mushtaq**
 
-- 1st Year CSE Student
-- ML & Deep Learning
+- 🎓 1st Year CSE Student
+- 🔥 Self-learned ML & Deep Learning
 - 📍 Kashmir, India
+- 🐙 [GitHub](https://github.com/mehranmushtaq)
+- 💻 [LeetCode](https://leetcode.com/u/mehraan1/)
 
-> *“Built from scratch. No shortcuts. Just learning.”*
+> *“From Kashmir — built everything from scratch, one commit at a time.”* 🚀
 
 -----
 
 ## 🔗 Related Projects
 
-- [ANN Classification — Date Fruit Variety Classification](../ann_classification/)
+- [ANN Classification — Date Fruit (94.44%)](../ann_classification/)
+- [CNN — CIFAR-10 Image Classification (75.32%)](../cnn/)
+- [CreditWise — Loan Approval System](https://github.com/mehranmushtaq/creditwise-loan-system)
+- [House Price Prediction — XGBoost (R²=0.929)](https://github.com/mehranmushtaq/Machine-Learning-with-scikit-learn-and-from-scratch)
 
 -----
 
+⭐ **Star this repo if you find it helpful!**
