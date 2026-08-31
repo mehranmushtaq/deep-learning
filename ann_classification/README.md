@@ -201,12 +201,11 @@ jupyter notebook ann_classification.ipynb
 - Classical baselines (Logistic Regression, Random Forest) are a useful sanity check — the ANN's edge over them (~2 points) justifies the added architectural complexity here
 - Cross-validation confirms Logistic Regression's held-out score isn't a fluke of the split
 
-## 👨‍💻 Author
+##  Author
 
 **Mehran Mushtaq**
-- 1st Year CSE Student
+- As 1st Year CSE Student
 - ML & Deep Learning
-- 📍 Kashmir, India
 
 > "Built from scratch. No shortcuts. Just learning."
 
