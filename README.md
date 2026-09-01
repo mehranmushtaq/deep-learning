@@ -268,7 +268,5 @@ deep-learning/
 
 ---
 
-## *"From Kashmir — built everything from scratch, one commit at a time."*
-
-⭐ **Star this repo if you find it helpful!**
+**Star this repo if you find it helpful!**
 
